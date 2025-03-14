@@ -79,8 +79,8 @@ namespace POC.Services.Commands.API.Controllers
         /// </summary>
         /// <param name="productId"></param>
         /// <returns></returns>
-        [HttpGet("dynamodb/{productId}")]
-        public async Task<IActionResult> GetById(int productId)
+        [HttpGet("dynamodb/getProductById/{productId}")]
+        public async Task<IActionResult> GetById(string productId)
         {          
             var product = await _context.LoadAsync<Product>(productId);
             if (product == null) return NotFound();
@@ -98,7 +98,7 @@ namespace POC.Services.Commands.API.Controllers
             return Ok(product);
         }
 
-        [HttpPost]
+        [HttpPost("dynamodb/CreateNewProduct")]
         public async Task<IActionResult> CreateProduct(Product productRequest)
         { 
             var product = await _context.LoadAsync<Product>(productRequest.Id);
@@ -107,8 +107,8 @@ namespace POC.Services.Commands.API.Controllers
             return Ok(productRequest);
         }
 
-        [HttpDelete("{productId}")]
-        public async Task<IActionResult> DeleteProduct(int productId)
+        [HttpDelete("dynamodb/deleteProduct/{productId}")]
+        public async Task<IActionResult> DeleteProduct(string productId)
         {  
             var product = await _context.LoadAsync<Product>(productId);
             if (product == null) return NotFound();
@@ -116,7 +116,7 @@ namespace POC.Services.Commands.API.Controllers
             return NoContent();
         }
 
-        [HttpPut]
+        [HttpPut("dynamodb/updateProduct")]
         public async Task<IActionResult> UpdateProduct(Product productRequest)
         {
             var product = await _context.LoadAsync<Product>(productRequest.Id);
